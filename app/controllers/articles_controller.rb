@@ -56,11 +56,11 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
    end
   
-  def require_same_user
-    if current_user!=@article.user
-      flash[:danger]="You can edit, update and delete your own article"
-      redirect_to article_path
+   def require_same_user
+    if current_user != @article.user and !current_user.admin?
+      flash[:danger] = "You can only edit or delete your own articles"
+      redirect_to root_path
     end
-  end
+   end
   
 end
